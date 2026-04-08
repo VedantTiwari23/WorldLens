@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
-import fetchcountries from './Utils/Countries';
+import { useEffect, useState } from "react";
+import fetchcountries from "./Utils/Countries";
 
 function App() {
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [region, setRegion] = useState("");
 
   useEffect(() => {
     const getData = async () => {
@@ -16,20 +18,48 @@ function App() {
 
   if (loading) return <p>Loading countries... 🌍</p>;
 
+  const filteredCountries = countries
+    .filter((e) => e.name.common.toLowerCase().includes(search.toLowerCase()))
+    .filter((e) => (region ? e.region == region : true));
+
   return (
     <div>
       <h1>Where Should I Travel? ✈️</h1>
-      <div className='box'>
-        {countries.slice(0, 99).map((c) => (
-        <div key={c.cca3}>
-          <img src={c.flags.png} width="50" />
-          <p>{c.name.common}</p>
-          <p>{c.region}</p>
-        </div>
-      ))}
+      <div className="controls">
+        <input
+          type="text"
+          placeholder="Search country..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+
+        <select onChange={(e) => setRegion(e.target.value)}>
+          <option value="">All Regions</option>
+          <option value="Asia">Asia</option>
+          <option value="Africa">Africa</option>
+          <option value="Europe">Europe</option>
+          <option value="Americas">Americas</option>
+          <option value="Oceania">Oceania</option>
+        </select>
       </div>
-      
+
+      <div className="box">
+        {filteredCountries.map((c) => (
+          <div key={c.cca3} className="card">
+            <div className="img">
+              <img src={c.flags.png} />
+            </div>
+
+            <div className="content">
+              <h3>{c.name.common}</h3>
+              <p>Population: {c.population}</p>
+              <p>Region: {c.region}</p>
+              <p>Capital: {c.capital[0]} </p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
-export default App
+export default App;
