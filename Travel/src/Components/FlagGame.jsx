@@ -6,6 +6,7 @@ export default function FlagGame() {
   const [question, setQuestion] = useState(null);
   const [input, setInput] = useState("");
   const [result, setResult] = useState("");
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     const getData = async () => {
@@ -33,11 +34,13 @@ export default function FlagGame() {
   };
 
   const checkAnswer = () => {
+    if (result) return //prevent form cheating agr ek correct ans ko baar baar submit krenge to scre badega wrna
     const userAns = input.trim().toLowerCase();
     const correctAns = question.name.toLowerCase();
 
     if (userAns === correctAns) {
       setResult("correct");
+      setScore((prev) => prev + 1);
     } else {
       setResult("wrong");
     }
@@ -47,11 +50,13 @@ export default function FlagGame() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-linear-to-r from-orange-100 to-blue-100 p-4">
-
       {/* CARD */}
       <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md text-center">
-
         <h2 className="text-2xl font-bold mb-4">Guess the Flag 🌍</h2>
+
+        <p className="text-lg font-semibold mb-4">
+          Score: <span className="text-orange-500">{score}</span>
+        </p>
 
         {/* FLAG IMAGE */}
         <img
