@@ -1,4 +1,5 @@
 /* Global */
+@import "tailwindcss";
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -15,7 +16,7 @@ h1 {
 /* Grid Container */
 .box {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* max 5 per row */
+  grid-template-columns: repeat(5, 1fr);
   gap: 20px;
   padding: 20px;
 }
@@ -23,13 +24,11 @@ h1 {
 /* Card */
 .card {
   width: 100%;
-  max-width: 250px;
-  margin: 0 auto;
   background: white;
   border-radius: 12px;
-  overflow: hidden; /* important for image */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: all 0.25s ease;
 }
 
 /* Hover Effect */
